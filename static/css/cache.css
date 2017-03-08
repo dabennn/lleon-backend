@@ -1,0 +1,9 @@
+.cache-list li{
+	margin-bottom: 10px;
+}
+.filename{
+	text-decoration: underline;
+}
+.description,.cachetime{
+	font-size: 0.8em;
+}

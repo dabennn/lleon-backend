@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+</head>
+<style>
+	html,body{
+		margin: 0;
+		padding: 0;
+	}
+	.log-wrapper{
+		width: 400px;
+		height: 220px;
+		margin: auto;
+		margin-top: 180px;
+		border:1px solid rgb(238,238,238);
+		border-radius:6px;
+	}
+	.title{
+		text-align: center;
+		margin-bottom: 30px;
+	}
+	.form-wrapper{
+		display: table;
+		margin: 0 auto;
+	}
+	.usr,.psw{
+		font-size: 18px;
+	}
+	.psw{
+		margin-top: 10px;
+	}
+	.username,.password{
+		width: 180px;
+		border: 1px solid rgb(220,220,220);
+		border-radius: 3px;
+		font-size: 0.8em;
+		padding: 4px 8px;
+	}
+	.login {
+		display: table;
+		margin: 0 auto;
+		margin-top: 20px;
+    width: 60px;
+    height: 30px;
+    font-size: 15px;
+    color: #fff;
+    background: rgb(38,178,220);
+    border: 1px solid transparent;
+    border-radius: 3px;
+	}
+</style>
+<body>
+	<div class="log-wrapper">
+		<h2 class="title">Log In</h2>
+		<div class="form-wrapper">
+			<form method="POST" action="javascript:void(0);">
+				<div class="usr">Username: <input type="text" class="username" name="username" placeholder="Username"></div>
+				<div class="psw">Password: <input type="password" class="password" name="password" placeholder="Password"></div>
+				<input type="submit" name="submit" class="login" value="Login">
+			</form>
+		</div>
+	</div>
+	<script>
+		var oUsr = document.querySelector('.username'),
+				oPsw = document.querySelector('.password'),
+				oLog = document.querySelector('.login'),
+				oForm = document.querySelector('form');
+
+		oLog.onclick = function(e){
+			e.preventDefault();
+			var xhr = new XMLHttpRequest();
+			var formdata = new FormData(oForm);
+			formdata.append('submit',this.value);
+
+			xhr.open('POST','http://localhost/backend/request/login.php',true);
+			xhr.send(formdata);
+
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4 && xhr.status === 200){
+					var res = JSON.parse(xhr.responseText);
+					if(res.code === 200){
+						alert(res.message);
+						window.location = 'http://localhost/backend/menu.php';
+					}else{
+						alert(res.code+' , '+res.message);
+					}
+				}
+			}
+		}
+
+
+	</script>
+</body>
+</html>
